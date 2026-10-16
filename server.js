@@ -24,7 +24,7 @@ function getAuth() {
   }
   throw new Error('Configure as credenciais do Google Drive no arquivo .env.');
 }
-const drive = google.drive({ version: 'v3', auth: getAuth() });
+function getDrive() { return google.drive({ version: 'v3', auth: getAuth() }); }
 let cache = { files: [], expires: 0, inflight: null, lastError: null, updatedAt: null };
 async function fetchPlaylist(force = false) {
   if (!FOLDER_ID) throw new Error('DRIVE_FOLDER_ID não foi definido.');
