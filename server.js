@@ -35,7 +35,7 @@ async function fetchPlaylist(force = false) {
       const found = [];
       let pageToken;
       do {
-        const result = await drive.files.list({
+        const result = await getDrive().files.list({
           q: `'${FOLDER_ID.replace(/'/g, "\\'")}' in parents and trashed = false`,
           fields: 'nextPageToken,files(id,name,mimeType,size,modifiedTime)',
           orderBy: 'name', pageSize: 1000, pageToken,
@@ -74,7 +74,7 @@ app.get('/api/video/:id', async (req, res) => {
     if (!videos.some(v => v.id === id)) return res.sendStatus(404);
     const headers = {};
     if (req.headers.range) headers.Range = req.headers.range;
-    const response = await drive.files.get({ fileId: id, alt: 'media', supportsAllDrives: true }, { responseType: 'stream', headers, validateStatus: status => status >= 200 && status < 300 });
+    const response = await getDrive().files.get({ fileId: id, alt: 'media', supportsAllDrives: true }, { responseType: 'stream', headers, validateStatus: status => status >= 200 && status < 300 });
     const upstream = response.data;
     res.status(response.status);
     const type = response.headers['content-type'] || 'video/mp4';
