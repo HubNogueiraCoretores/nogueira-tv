@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: nogueira-tv
+    runtime: docker
+    plan: starter
+    healthCheckPath: /health
+    envVars:
+      - key: DRIVE_FOLDER_ID
+        value: '1GxTVXDZ2IiLN2nEnRKvm7dZn8t1ZOxj6'
+      - key: GOOGLE_SERVICE_ACCOUNT_JSON_BASE64
+        sync: false
+      - key: PLAYLIST_REFRESH_SECONDS
+        value: '60'

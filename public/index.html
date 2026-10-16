@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#071b2d">
+<title>Nogueira Venda | TV Corporativa</title>
+<style>
+:root{--navy:#071b2d;--navy2:#0c2942;--gold:#d7b77c;--white:#f6f6f5;--muted:#a8b9c6}*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#040c15;color:var(--white);font-family:Arial,Helvetica,sans-serif}
+#screen{position:relative;width:100vw;height:100vh;overflow:hidden;background:linear-gradient(125deg,#061626,#102d46 60%,#061626)}
+#screen:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 68% 42%,rgba(215,183,124,.13),transparent 40%),linear-gradient(45deg,transparent 48%,rgba(255,255,255,.02) 49%,rgba(255,255,255,.02) 51%,transparent 52%);pointer-events:none}
+video{display:none;position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:black}video.active{display:block}
+#standby{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:5vw;gap:20px;z-index:2}body.playing #standby{display:none}
+.brandline{display:flex;flex-direction:column;align-items:center}.monogram{width:112px;height:112px;border:2px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:Georgia,serif;font-weight:700;font-size:60px;letter-spacing:-8px;padding-right:10px;color:var(--gold);margin-bottom:32px}.brand{font-family:Georgia,'Times New Roman',serif;font-size:clamp(36px,5vw,88px);letter-spacing:.16em;line-height:1.12}.brand-sub{letter-spacing:.48em;font-size:clamp(11px,1.35vw,21px);color:var(--gold);margin-top:12px}.gold-rule{height:2px;width:120px;background:var(--gold);margin:23px auto}.headline{font-size:clamp(18px,2.3vw,34px);font-weight:300;color:#e7ebef;letter-spacing:.035em}#message{font-size:clamp(13px,1.1vw,18px);color:var(--muted);max-width:750px;line-height:1.5}
+#topbar{position:absolute;z-index:4;left:0;right:0;top:0;padding:22px 30px;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(#071b2db8,transparent);opacity:0;transition:opacity .35s}#screen:hover #topbar,#screen.show-ui #topbar{opacity:1}.mini-brand{font-family:Georgia,serif;letter-spacing:.16em;font-size:16px}.mini-brand span{color:var(--gold)}.status{font-size:12px;color:#d4e3ef;letter-spacing:.12em;text-transform:uppercase}
+#controls{position:absolute;bottom:0;left:0;right:0;z-index:4;opacity:0;display:flex;align-items:center;gap:12px;padding:26px 30px 18px;background:linear-gradient(transparent,#061525df);transition:opacity .35s}#screen:hover #controls,#screen.show-ui #controls{opacity:1}
+button{appearance:none;border:1px solid #ffffff36;border-radius:8px;background:#0e2b45d9;color:white;padding:12px 17px;cursor:pointer;font-size:15px}button:hover{border-color:var(--gold)}button:focus-visible{outline:3px solid var(--gold)}#now{font-size:13px;color:#d7dfeb;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1}#clock{font-size:13px;letter-spacing:.08em;color:#c0cfdb}#playBtn{background:var(--gold);color:#071b2d;font-weight:bold;border:0}
+#startOverlay{position:absolute;inset:0;z-index:6;background:rgba(2,12,24,.85);display:none;align-items:center;justify-content:center;flex-direction:column;gap:20px;text-align:center;padding:24px}#startOverlay.visible{display:flex}#startOverlay button{font-size:23px;background:var(--gold);color:#082039;padding:22px 38px;border:none;font-weight:700}#startOverlay p{color:#c0cfdb;max-width:650px}
+#notification{position:absolute;bottom:100px;left:50%;transform:translateX(-50%);background:#08233eea;padding:12px 22px;border:1px solid #d7b77c88;border-radius:10px;z-index:7;color:white;display:none;max-width:80vw;text-align:center;font-size:14px}
+@media (pointer:coarse){#topbar,#controls{opacity:1}}@media(max-width:620px){#controls{padding:12px;gap:6px;flex-wrap:wrap}button{padding:10px;font-size:13px}.brand{letter-spacing:.08em}.brand-sub{letter-spacing:.2em}.monogram{height:80px;width:80px;font-size:45px}}
+</style>
+</head>
+<body>
+<main id="screen" class="show-ui">
+  <video id="player" playsinline webkit-playsinline preload="auto" muted></video>
+  <section id="standby">
+    <div class="brandline"><div class="monogram">N</div><div class="brand">NOGUEIRA</div><div class="brand-sub">VENDA DE IMÓVEIS</div></div>
+    <div class="gold-rule"></div><div class="headline">Conectando pessoas a novos lugares.</div>
+    <div id="message" aria-live="polite">Conectando à playlist corporativa...</div>
+  </section>
+  <div id="topbar"><div class="mini-brand">NOGUEIRA <span>VENDA</span> <small> | TV CORPORATIVA</small></div><div class="status" id="status">CONECTANDO</div></div>
+  <div id="controls"><button id="playBtn" title="Reproduzir/Pausar">▶ Reproduzir</button><button id="nextBtn" title="Próximo vídeo">Próximo ›</button><button id="muteBtn" title="Ativar ou desativar o som">🔇 Sem som</button><button id="fullBtn" title="Tela cheia">⛶ Tela cheia</button><div id="now">Aguardando playlist</div><div id="clock"></div></div>
+  <div id="startOverlay"><button id="startBtn">▶ Iniciar TV corporativa</button><p>Algumas Smart TVs exigem um clique no controle remoto para começar a reprodução automática.</p></div>
+  <div id="notification" role="status"></div>
+</main>
+<script>
+(function(){
+'use strict';
+var player=document.getElementById('player'), msg=document.getElementById('message'), status=document.getElementById('status'), now=document.getElementById('now'), overlay=document.getElementById('startOverlay'), screen=document.getElementById('screen');
+var items=[], currentId=null, position=0, started=false, mute=true, lastSignature='', failures=0, blocked=false;
+var qs=new URLSearchParams(location.search);var soundRequested=qs.get('som')==='1';mute=!soundRequested;player.muted=mute;
+function clock(){var d=new Date();document.getElementById('clock').textContent=d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});}
+setInterval(clock,15000);clock();
+function notify(message){var n=document.getElementById('notification');n.textContent=message;n.style.display='block';clearTimeout(notify.t);notify.t=setTimeout(function(){n.style.display='none'},4500)}
+function showStatus(s){status.textContent=s;}
+function setPlayButton(){document.getElementById('playBtn').textContent=player.paused?'▶ Reproduzir':'❚❚ Pausar'}
+function showStandby(message){document.body.classList.remove('playing');if(message)msg.textContent=message;}
+function showVideo(){document.body.classList.add('playing');player.classList.add('active');}
+function loadIndex(i){if(!items.length){showStandby('Nenhum vídeo encontrado. Adicione arquivos MP4 na pasta do Google Drive.');showStatus('SEM VÍDEOS');return;}position=(i+items.length)%items.length;var v=items[position];currentId=v.id;now.textContent=(position+1)+' / '+items.length+' · '+v.name;player.pause();player.src=v.url;player.load();showStatus('PLAYLIST · '+items.length+' VÍDEO(S)');if(started)play();}
+function play(){if(!items.length)return;started=true;overlay.classList.remove('visible');showVideo();var p=player.play();if(p&&p.then)p.then(function(){blocked=false;failures=0;setPlayButton()}).catch(function(e){setPlayButton();if(e&&e.name==='NotAllowedError'){blocked=true;overlay.classList.add('visible');showStatus('AGUARDANDO INÍCIO')}else{handleFailure()}});}
+function handleFailure(){if(!items.length)return;failures++;if(failures>=items.length){showStandby('Não foi possível reproduzir os vídeos. Verifique o formato MP4 (H.264/AAC), as permissões do Drive e a conexão.');showStatus('ERRO DE REPRODUÇÃO');started=false;return;}notify('Não foi possível abrir este vídeo. Pulando para o próximo.');setTimeout(next,1300)}
+function next(){if(items.length)loadIndex(position+1)}
+function applyPlaylist(newItems){if(!Array.isArray(newItems))return;var signature=newItems.map(function(x){return x.id+':'+x.modifiedTime}).join('|');if(signature===lastSignature)return;lastSignature=signature;items=newItems;
+ if(!items.length){player.pause();player.removeAttribute('src');player.load();currentId=null;showStandby('Nenhum vídeo na pasta. Envie um arquivo MP4 para iniciar a exibição.');showStatus('SEM VÍDEOS');now.textContent='Playlist vazia';return;}
+ var ix=items.findIndex(function(x){return x.id===currentId});if(ix<0){loadIndex(0)}else{position=ix;now.textContent=(position+1)+' / '+items.length+' · '+items[position].name;showStatus('PLAYLIST · '+items.length+' VÍDEO(S)')}
+}
+function refresh(){fetch('/api/playlist',{cache:'no-store'}).then(function(r){if(!r.ok)throw Error('HTTP '+r.status);return r.json()}).then(function(data){applyPlaylist(data.videos);if(data.warning)notify('Drive temporariamente indisponível: usando última playlist.')}).catch(function(){if(!items.length){showStandby('Não foi possível carregar a playlist. Verifique a configuração do servidor e a conexão.');showStatus('SEM CONEXÃO')}else showStatus('RECONEXÃO AUTOMÁTICA')})}
+player.addEventListener('ended',next);player.addEventListener('error',function(){if(player.getAttribute('src'))handleFailure()});player.addEventListener('play',setPlayButton);player.addEventListener('pause',setPlayButton);
+document.getElementById('playBtn').onclick=function(){if(player.paused)play();else{player.pause();setPlayButton()}};
+document.getElementById('nextBtn').onclick=next;
+document.getElementById('muteBtn').onclick=function(){mute=!mute;player.muted=mute;this.textContent=mute?'🔇 Sem som':'🔊 Com som';if(!player.paused)play()};
+document.getElementById('fullBtn').onclick=function(){if(screen.requestFullscreen)screen.requestFullscreen().catch(function(){notify('Tela cheia não suportada neste navegador.')});else notify('Use o modo tela cheia da Smart TV.')};
+document.getElementById('startBtn').onclick=function(){overlay.classList.remove('visible');play()};
+window.addEventListener('keydown',function(e){if(e.key==='ArrowRight')next();if(e.key===' '||e.key==='Enter'){if(overlay.classList.contains('visible')){overlay.classList.remove('visible');play()}else if(player.paused)play();else player.pause();e.preventDefault()}if(e.key==='f'||e.key==='F')document.getElementById('fullBtn').click()});
+if(soundRequested){document.getElementById('muteBtn').textContent='🔊 Com som';}
+refresh();setInterval(refresh,60000);
+// Exibe controles quando o usuário interage. Mantém player limpo em operação contínua.
+var hideTimer;function reveal(){screen.classList.add('show-ui');clearTimeout(hideTimer);hideTimer=setTimeout(function(){screen.classList.remove('show-ui')},7000)}
+['mousemove','click','touchstart'].forEach(function(event){screen.addEventListener(event,reveal)});reveal();
+})();
+</script>
+</body>
+</html>

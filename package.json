@@ -1,0 +1,9 @@
+{
+  "name": "nogueira-tv-corporativa",
+  "version": "1.0.0",
+  "private": true,
+  "description": "TV corporativa: vídeos do Google Drive em loop",
+  "scripts": {"start": "node server.js", "dev": "node --watch server.js"},
+  "engines": {"node": ">=20"},
+  "dependencies": {"express": "^4.21.2", "googleapis": "^144.0.0", "helmet": "^8.0.0", "dotenv": "^16.4.7"}
+}

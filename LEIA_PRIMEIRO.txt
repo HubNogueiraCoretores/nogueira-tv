@@ -1,0 +1,8 @@
+NOGUEIRA TV CORPORATIVA
+
+Pasta do Google Drive configurada: 1GxTVXDZ2IiLN2nEnRKvm7dZn8t1ZOxj6
+Arquivo encontrado: 1015 (2).mp4
+
+AINDA FALTA: autorizar o servidor na API do Google Drive e publicar o site.
+O link da pasta sozinho nao autoriza o servidor a transmitir os videos.
+Nunca envie senhas ou chaves privadas pelo chat.
